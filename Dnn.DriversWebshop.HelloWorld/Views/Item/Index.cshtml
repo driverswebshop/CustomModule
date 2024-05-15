@@ -1,0 +1,128 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable< DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.Item >>
+
+@using System.Text.RegularExpressions
+@using DotNetNuke.Web.Mvc.Helpers
+
+
+<div id="Items-@Dnn.ModuleContext.ModuleId">
+    @*@if (Model.Count() == 0)
+        {
+            <p>@Dnn.LocalizeString("NoItems")</p>
+        }
+        else
+        {
+            <ul class="tm_tl">
+                @foreach (var item in Model)
+                {
+                    <li class="tm_t">
+                        <h3>@item.ItemName</h3>
+                        <div class="tm_td">@item.ItemDescription</div>
+                        @{
+                            if (Dnn.ModuleContext.IsEditable)
+                            {
+                                <div>
+                                    <a href="@Url.Action("Edit", "Item", new {ctl = "Edit", itemId = item.ItemId})">@Dnn.LocalizeString("EditItem")</a>
+                                    <a href="@Url.Action("Delete", "Item", new {itemId = item.ItemId})">@Dnn.LocalizeString("DeleteItem")</a>
+                                </div>
+                            }
+                        }
+                    </li>
+                }
+            </ul>
+        }*@
+    <style>
+        .score {
+            font-size: 24px;
+            padding: 10px;
+            color: white;
+            margin-top: 20px;
+            width: fit-content;
+        }
+
+        .low {
+            background-color: red;
+        }
+
+        .medium {
+            background-color: orange;
+        }
+
+        .high {
+            background-color: green;
+        }
+    </style>
+    <script>
+        function calculateScore() {
+            var gpu = document.getElementById('gpu').value;
+            var cpu = document.getElementById('cpu').value;
+            var ram = document.getElementById('ram').value;
+            var score = 0;
+
+            // GPU Scoring
+            switch (gpu) {
+                case 'RTX 3090': score += 100; break;
+                case 'RTX 3070': score += 85; break;
+                case 'GTX 1660': score += 70; break;
+                case 'Radeon RX 6800 XT': score += 90; break;
+                case 'Radeon RX 5700 XT': score += 75; break;
+            }
+
+            // CPU Scoring
+            switch (cpu) {
+                case 'i9-11900K': score += 100; break;
+                case 'i7-10700K': score += 85; break;
+                case 'Ryzen 9 5900X': score += 100; break;
+                case 'Ryzen 5 3600': score += 75; break;
+            }
+
+            // RAM Scoring
+            switch (ram) {
+                case '32GB+': score += 40; break;
+                case '16GB': score += 30; break;
+                case '8GB': score += 20; break;
+            }
+
+            var scoreElement = document.getElementById('score');
+            scoreElement.innerHTML = "A PC hardver pontszámod: " + score;
+
+            if (score < 150) {
+                scoreElement.className = 'score low';
+            } else if (score < 200) {
+                scoreElement.className = 'score medium';
+            } else {
+                scoreElement.className = 'score high';
+            }
+        }
+    </script>
+    </head>
+    <body>
+        <h1>PC Hardver Pontszám Kalkulátor</h1>
+        <form>
+            <label for="gpu">Válassz GPU-t:</label>
+            <select id="gpu">
+                <option value="RTX 3090">Nvidia RTX 3090</option>
+                <option value="RTX 3070">Nvidia RTX 3070</option>
+                <option value="GTX 1660">Nvidia GTX 1660</option>
+                <option value="Radeon RX 6800 XT">AMD Radeon RX 6800 XT</option>
+                <option value="Radeon RX 5700 XT">AMD Radeon RX 5700 XT</option>
+            </select><br><br>
+
+            <label for="cpu">Válassz CPU-t:</label>
+            <select id="cpu">
+                <option value="i9-11900K">Intel Core i9-11900K</option>
+                <option value="i7-10700K">Intel Core i7-10700K</option>
+                <option value="Ryzen 9 5900X">AMD Ryzen 9 5900X</option>
+                <option value="Ryzen 5 3600">AMD Ryzen 5 3600</option>
+            </select><br><br>
+
+            <label for="ram">Válassz RAM-ot:</label>
+            <select id="ram">
+                <option value="32GB+">32GB vagy több</option>
+                <option value="16GB">16GB</option>
+                <option value="8GB">8GB</option>
+            </select><br><br>
+
+            <button type="button" onclick="calculateScore()">Pontszám számítása</button>
+        </form>
+        <div id="score" class="score"></div>
+</div>

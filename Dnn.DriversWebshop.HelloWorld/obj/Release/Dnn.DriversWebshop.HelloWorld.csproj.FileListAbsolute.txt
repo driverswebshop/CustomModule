@@ -1,0 +1,10 @@
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\bin\Dnn.DriversWebshop.HelloWorld.dll.config
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\bin\Dnn.DriversWebshop.HelloWorld.dll
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\bin\Dnn.DriversWebshop.HelloWorld.pdb
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.DriversWebshop.HelloWorld.csproj.AssemblyReference.cache
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.App_LocalResources.Settings.resources
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.DriversWebshop.HelloWorld.csproj.GenerateResource.cache
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.DriversWebshop.HelloWorld.csproj.CoreCompileInputs.cache
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.Driv.5379BBB4.Up2Date
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.DriversWebshop.HelloWorld.dll
+C:\Users\damja\Documents\Egyetem\RF\DNN\DesktopModules\MVC\module-helloworld\Dnn.DriversWebshop.HelloWorld\obj\Release\Dnn.DriversWebshop.HelloWorld.pdb
