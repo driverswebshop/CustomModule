@@ -16,9 +16,11 @@ using DotNetNuke.Web.Mvc.Framework.ActionFilters;
 using DotNetNuke.Web.Mvc.Framework.Controllers;
 using DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Components;
 using DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models;
+using DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Data;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Collections.Generic;
 
 namespace DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Controllers
 {
@@ -78,9 +80,22 @@ namespace DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Controllers
         }
 
         [ModuleAction(ControlKey = "Edit", TitleKey = "AddItem")]
-        public ActionResult Index()
+        public ActionResult AnotherAction()
         {
             var items = ItemManager.Instance.GetItems(ModuleContext.ModuleId);
+            return View(items);
+        }
+
+        private readonly CustomModuleRepository _repository;
+
+        public ItemController(CustomModuleRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public ActionResult Index()
+        {
+            IEnumerable<CustomModuleItem> items = _repository.GetAllItems();
             return View(items);
         }
     }
