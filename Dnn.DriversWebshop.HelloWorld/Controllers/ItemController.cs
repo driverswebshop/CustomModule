@@ -95,8 +95,33 @@ namespace DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Controllers
 
         public ActionResult Index()
         {
-            IEnumerable<CustomModuleItem> items = _repository.GetAllItems();
-            return View(items);
+            var cpuBenchmarks = _repository.GetCpuBenchmarks();
+            var gpuBenchmarks = _repository.GetGpuBenchmarks();
+            var ramBenchmarks = _repository.GetRamBenchmarks();
+
+            ViewBag.CpuBenchmarks = cpuBenchmarks;
+            ViewBag.GpuBenchmarks = gpuBenchmarks;
+            ViewBag.RamBenchmarks = ramBenchmarks;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CalculateScore(string selectedCpu, string selectedGpu, string selectedRam)
+        {
+            var cpuBenchmark = _repository.GetCpuBenchmarks().FirstOrDefault(c => c.CpuName == selectedCpu);
+            var gpuBenchmark = _repository.GetGpuBenchmarks().FirstOrDefault(g => g.GpuName == selectedGpu);
+            var ramBenchmark = _repository.GetRamBenchmarks().FirstOrDefault(r => r.RamName == selectedRam);
+
+            if (cpuBenchmark == null || gpuBenchmark == null || ramBenchmark == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            double score = (gpuBenchmark.GpuPercentage * 0.6) + (cpuBenchmark.CpuPercentage * 0.3) + (ramBenchmark.RamPercentage * 0.1);
+
+            ViewBag.Score = score;
+            return View("Index");
         }
     }
 }

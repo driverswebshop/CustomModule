@@ -114,6 +114,7 @@
     <Compile Include="Components\ItemManager.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Data\CustomModuleRepository.cs" />
+    <Compile Include="Models\HardwareBenchmark.cs" />
     <Compile Include="Models\CustomModuleItem.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Controllers\ItemController.cs" />

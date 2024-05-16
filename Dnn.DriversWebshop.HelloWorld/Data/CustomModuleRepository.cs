@@ -16,23 +16,30 @@ namespace DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Data
             _connectionString = ConfigurationManager.ConnectionStrings["SiteSqlServer"].ConnectionString;
         }
 
-        public IEnumerable<CustomModuleItem> GetAllItems()
+        public IEnumerable<HardwareBenchmark> GetCpuBenchmarks()
         {
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                string query = @"
-                    SELECT 
-                        cpu.percentage AS CpuPercentage,
-                        gpu.percentage AS GpuPercentage,
-                        ram.percentage AS RamPercentage
-                    FROM 
-                        module_cpu_benchmarks cpu
-                    JOIN 
-                        module_gpu_benchmarks gpu ON cpu.id = gpu.cpu_id
-                    JOIN 
-                        module_ram_benchmarks ram ON cpu.id = ram.cpu_id";
+                string query = "SELECT name AS CpuName, percentage AS CpuPercentage FROM module_cpu_benchmarks";
+                return db.Query<HardwareBenchmark>(query);
+            }
+        }
 
-                return db.Query<CustomModuleItem>(query);
+        public IEnumerable<HardwareBenchmark> GetGpuBenchmarks()
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT name AS GpuName, percentage AS GpuPercentage FROM module_gpu_benchmarks";
+                return db.Query<HardwareBenchmark>(query);
+            }
+        }
+
+        public IEnumerable<HardwareBenchmark> GetRamBenchmarks()
+        {
+            using (IDbConnection db = new SqlConnection(_connectionString))
+            {
+                string query = "SELECT name AS RamName, percentage AS RamPercentage FROM module_ram_benchmarks";
+                return db.Query<HardwareBenchmark>(query);
             }
         }
     }
