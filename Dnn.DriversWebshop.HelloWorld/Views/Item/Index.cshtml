@@ -1,8 +1,15 @@
-﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable< DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.Item >>
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<IEnumerable<DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.HardwareBenchmark>>
 
 @using System.Text.RegularExpressions
 @using DotNetNuke.Web.Mvc.Helpers
 
+@{
+    Layout = "~/DesktopModules/MVC/Dnn.DriversWebshop.HelloWorld/Views/Shared/_Layout.cshtml";
+    var cpuBenchmarks = ViewBag.CpuBenchmarks as IEnumerable<DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.HardwareBenchmark>;
+    var gpuBenchmarks = ViewBag.GpuBenchmarks as IEnumerable<DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.HardwareBenchmark>;
+    var ramBenchmarks = ViewBag.RamBenchmarks as IEnumerable<DriversWebshop.Dnn.Dnn.DriversWebshop.HelloWorld.Models.HardwareBenchmark>;
+    var score = ViewBag.Score as float?;
+}
 
 <div id="Items-@Dnn.ModuleContext.ModuleId">
     @*@if (Model.Count() == 0)
@@ -53,37 +60,18 @@
     </style>
     <script>
         function calculateScore() {
-            var gpu = document.getElementById('gpu').value;
-            var cpu = document.getElementById('cpu').value;
-            var ram = document.getElementById('ram').value;
-            var score = 0;
+            var gpuSelect = document.getElementById('gpu');
+            var cpuSelect = document.getElementById('cpu');
+            var ramSelect = document.getElementById('ram');
 
-            // GPU Scoring
-            switch (gpu) {
-                case 'RTX 3090': score += 100; break;
-                case 'RTX 3070': score += 85; break;
-                case 'GTX 1660': score += 70; break;
-                case 'Radeon RX 6800 XT': score += 90; break;
-                case 'Radeon RX 5700 XT': score += 75; break;
-            }
+            var gpu = gpuSelect.options[gpuSelect.selectedIndex].dataset.percentage;
+            var cpu = cpuSelect.options[cpuSelect.selectedIndex].dataset.percentage;
+            var ram = ramSelect.options[ramSelect.selectedIndex].dataset.percentage;
 
-            // CPU Scoring
-            switch (cpu) {
-                case 'i9-11900K': score += 100; break;
-                case 'i7-10700K': score += 85; break;
-                case 'Ryzen 9 5900X': score += 100; break;
-                case 'Ryzen 5 3600': score += 75; break;
-            }
-
-            // RAM Scoring
-            switch (ram) {
-                case '32GB+': score += 40; break;
-                case '16GB': score += 30; break;
-                case '8GB': score += 20; break;
-            }
+            var score = (gpu * 0.6) + (cpu * 0.3) + (ram * 0.1);
 
             var scoreElement = document.getElementById('score');
-            scoreElement.innerHTML = "A PC hardver pontszámod: " + score;
+            scoreElement.innerHTML = "A PC hardver pontszámod: " + score.toFixed(2);
 
             if (score < 150) {
                 scoreElement.className = 'score low';
@@ -94,35 +82,36 @@
             }
         }
     </script>
-    </head>
-    <body>
-        <h1>PC Hardver Pontszám Kalkulátor</h1>
-        <form>
-            <label for="gpu">Válassz GPU-t:</label>
-            <select id="gpu">
-                <option value="RTX 3090">Nvidia RTX 3090</option>
-                <option value="RTX 3070">Nvidia RTX 3070</option>
-                <option value="GTX 1660">Nvidia GTX 1660</option>
-                <option value="Radeon RX 6800 XT">AMD Radeon RX 6800 XT</option>
-                <option value="Radeon RX 5700 XT">AMD Radeon RX 5700 XT</option>
-            </select><br><br>
+    <h1>PC Hardver Pontszám Kalkulátor</h1>
+    <form method="post" action="@Url.Action("CalculateScore", "Item")">
+        <label for="gpu">Válassz GPU-t:</label>
+        <select id="gpu" name="selectedGpu">
+            @foreach (var gpu in gpuBenchmarks)
+            {
+                <option value="@gpu.GpuName" data-percentage="@gpu.GpuPercentage">@gpu.GpuName</option>
+            }
+        </select>
+        <br><br />
 
-            <label for="cpu">Válassz CPU-t:</label>
-            <select id="cpu">
-                <option value="i9-11900K">Intel Core i9-11900K</option>
-                <option value="i7-10700K">Intel Core i7-10700K</option>
-                <option value="Ryzen 9 5900X">AMD Ryzen 9 5900X</option>
-                <option value="Ryzen 5 3600">AMD Ryzen 5 3600</option>
-            </select><br><br>
+        <label for="cpu">Válassz CPU-t:</label>
+        <select id="cpu" name="selectedCpu">
+            @foreach (var cpu in cpuBenchmarks)
+            {
+                <option value="@cpu.CpuName" data-percentage="@cpu.CpuPercentage">@cpu.CpuName</option>
+            }
+        </select>
+        <br><br />
 
-            <label for="ram">Válassz RAM-ot:</label>
-            <select id="ram">
-                <option value="32GB+">32GB vagy több</option>
-                <option value="16GB">16GB</option>
-                <option value="8GB">8GB</option>
-            </select><br><br>
+        <label for="ram">Válassz RAM-ot:</label>
+        <select id="ram" name="selectedRam">
+            @foreach (var ram in ramBenchmarks)
+            {
+                <option value="@ram.RamName" data-percentage="@ram.RamPercentage">@ram.RamName</option>
+            }
+        </select>
+        <br><br />
 
-            <button type="button" onclick="calculateScore()">Pontszám számítása</button>
-        </form>
-        <div id="score" class="score"></div>
+        <button type="button" onclick="calculateScore()">Pontszám számítása</button>
+    </form>
+    <div id="score" class="score"></div>
 </div>
