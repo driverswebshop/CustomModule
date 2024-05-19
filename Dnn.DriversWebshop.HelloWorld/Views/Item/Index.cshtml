@@ -83,7 +83,7 @@
         }
     </script>
     <h1>PC Hardver Pontszám Kalkulátor</h1>
-    <form method="post" action="@Url.Action("CalculateScore", "Item")">
+    @*<form method="post" action="@Url.Action("CalculateScore", "Item")">
         <label for="gpu">Válassz GPU-t:</label>
         <select id="gpu" name="selectedGpu">
             @foreach (var gpu in gpuBenchmarks)
@@ -113,5 +113,5 @@
 
         <button type="button" onclick="calculateScore()">Pontszám számítása</button>
     </form>
-    <div id="score" class="score"></div>
+    <div id="score" class="score"></div>*@
 </div>
